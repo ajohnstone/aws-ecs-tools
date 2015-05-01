@@ -25,9 +25,12 @@ TMP=$(mktemp -d --tmpdir='/tmp/'  instance-id-${DATE_STAMP}-${INSTANCE_ID}.XXXXX
     done;
     iptables-save > "${TMP}/iptables";
     
-    mkdir -p "${TMP}/var/log";
+    mkdir -p "${TMP}/var/log" "${TMP}/ecs";
     /opt/aws/bin/ec2-metadata > "${TMP}/ec2-metadata"
- 
+    
+    curl -s 127.0.0.1:51678/v1/metadata | python -mjson.tool > "${TMP}/ecs/metadata";
+    curl -s 127.0.0.1:51678/v1/tasks | python -mjson.tool > "${TMP}/ecs/tasks";
+    
     cp -Rv /var/log/ecs /var/log/syslog* /var/log/dmesg* /var/log/kern.log* "${TMP}/var/log"
     
     tar -zcvf "${TMP}.tar.gz" "${TMP}"
