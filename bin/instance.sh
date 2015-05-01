@@ -6,6 +6,7 @@ PATH="${PATH}:/sbin:/bin:/usr/sbin:/usr/bin";
  
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id);
 DATE_STAMP=$(date --utc --iso-8601=s | sed 's/[:+]/_/g');
+
 TMP=$(mktemp -d --tmpdir='/tmp/'  instance-id-${DATE_STAMP}-${INSTANCE_ID}.XXXXXXXXXX) && {
     docker info > "${TMP}/docker-info"
  
