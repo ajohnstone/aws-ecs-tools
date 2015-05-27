@@ -29,7 +29,7 @@ TMP=$(mktemp -d --tmpdir='/tmp/'  instance-id-${DATE_STAMP}-${INSTANCE_ID}.XXXXX
     iptables-save > "${TMP}/iptables";
     
     mkdir -p "${TMP}/var/log" "${TMP}/ecs";
-    ec2-metadata > "${TMP}/ec2-metadata"
+    which ec2-metadata && { ec2-metadata > "${TMP}/ec2-metadata" } || echo "Binary for ec2-metadata not found."
     
     curl -s 127.0.0.1:51678/v1/metadata | python -mjson.tool > "${TMP}/ecs/metadata";
     curl -s 127.0.0.1:51678/v1/tasks | python -mjson.tool > "${TMP}/ecs/tasks";
