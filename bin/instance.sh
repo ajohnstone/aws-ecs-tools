@@ -39,5 +39,5 @@ TMP=$(mktemp -d --tmpdir='/tmp/'  instance-id-${DATE_STAMP}-${INSTANCE_ID}.XXXXX
     cp -Rv /var/log/ecs /var/log/syslog* /var/log/dmesg* /var/log/kern.log* "${TMP}/var/log";
     
     tar -zcvf "${TMP}.tar.gz" "${TMP}";
-    echo "Create '${TMP}.tar.gz'";
+    echo "Created '${TMP}.tar.gz'";
 }
