@@ -2,7 +2,7 @@
  
 shopt -s nullglob
  
-PATH="${PATH}:/sbin:/bin:/usr/sbin:/usr/bin";
+PATH="${PATH}:/sbin:/bin:/usr/sbin:/usr/bin:/opt/aws/bin/";
  
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id);
 DATE_STAMP=$(date --utc --iso-8601=s | sed 's/[:+]/_/g');
@@ -29,7 +29,7 @@ TMP=$(mktemp -d --tmpdir='/tmp/'  instance-id-${DATE_STAMP}-${INSTANCE_ID}.XXXXX
     iptables-save > "${TMP}/iptables";
     
     mkdir -p "${TMP}/var/log" "${TMP}/ecs";
-    /opt/aws/bin/ec2-metadata > "${TMP}/ec2-metadata"
+    ec2-metadata > "${TMP}/ec2-metadata"
     
     curl -s 127.0.0.1:51678/v1/metadata | python -mjson.tool > "${TMP}/ecs/metadata";
     curl -s 127.0.0.1:51678/v1/tasks | python -mjson.tool > "${TMP}/ecs/tasks";
